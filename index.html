@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17048406850"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-17048406850');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/base/base.css">
+    <link rel="stylesheet" href="css/base/typography.css">
+    <link rel="stylesheet" href="css/base/variable.css">
+    <link rel="stylesheet" href="css/components/buttons.css">
+    <link rel="stylesheet" href="css/components/cards.css">
+    <link rel="stylesheet" href="css/components/carousel.css">
+    <link rel="stylesheet" href="css/components/forms.css">
+    <link rel="stylesheet" href="css/components/navbar.css">
+    <link rel="stylesheet" href="css/layout/footer.css">
+    <link rel="stylesheet" href="css/layout/header.css">
+    <link rel="stylesheet" href="css/layout/section.css">
+    <title>Quartier Capote | Alto Padrão | Vanessa Fernandes</title>
+    <meta name="description" content="Entre o charme dos Jardins e a pluralidade de Pinheiros. Conheça o Quartier Capote, um empreendimento de alto padrão com arquitetura Königsberger Vannucchi.">
+    
+    <!-- Tailwind CSS + Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                screens: {
+                    'xs': '375px',
+                    'sm': '640px',
+                    'md': '768px',
+                    'lg': '1024px',
+                    'xl': '1280px',
+                    '2xl': '1536px',
+                },
+                extend: {
+                    colors: {
+                        champagne: '#F7E7CE',
+                        taupe: '#968C83',
+                        noir: '#E8E0D4',
+                        clay: '#BF8A6F',
+                        stone: '#E8E0D4',
+                    },
+                    fontFamily: {
+                        'cormorant': ['Cormorant Garamond', 'serif'],
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-in-out',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                    },
+                    fontSize: {
+                        'xxs': '0.65rem',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Alpine.js for interactivity -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Swiper for carousel -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background-size: cover;
+            background: url(img/quartier-5.jpeg) no-repeat center fixed;
+            background-color: #F9F7F4;
+            color: #2A2A2A;
+        }
+        
+       
+    </style>
+</head>
+
+<body x-data="{ 
+        isMenuOpen: false,
+        activeSection: 'hero',
+        scrollPosition: 0,
+        isMobile: window.innerWidth < 768,
+        init() {
+            // Detecta se é mobile
+            this.checkIfMobile();
+            window.addEventListener('resize', () => this.checkIfMobile());
+            
+            // Update active section on scroll
+            window.addEventListener('scroll', () => {
+                this.scrollPosition = window.scrollY;
+                
+                const sections = ['hero', 'video', 'gallery', 'specs', 'contact'];
+                for (let section of sections) {
+                    const el = document.getElementById(section);
+                    if (el) {
+                        const rect = el.getBoundingClientRect();
+                        if (rect.top <= 100 && rect.bottom >= 100) {
+                            this.activeSection = section;
+                        }
+                    }
+                }
+            });
+            
+            // Initialize Swiper com configurações responsivas
+            const swiper = new Swiper('.swiper', {
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                    dynamicBullets: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true
+                },
+                // Otimizações para mobile
+                slidesPerView: 1,
+                spaceBetween: 0,
+                breakpoints: {
+                    640: {
+                        slidesPerView: 1,
+                        spaceBetween: 0,
+                    },
+                    768: {
+                        slidesPerView: 1,
+                        spaceBetween: 0,
+                    },
+                }
+            });
+            
+            // Initialize Lucide icons
+            lucide.createIcons();
+        },
+        checkIfMobile() {
+            this.isMobile = window.innerWidth < 768;
+        }
+    }" 
+    @scroll.window="scrollPosition = window.scrollY"
+    class="relative">
+    
+    <!-- Dynamic Background Image -->
+    <div class="parallax-container fixed inset-0 -z-10">
+        <div class="parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/10"></div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav :class="scrollPosition > 100 ? 'glass-effect bg-white/90 py-4 shadow-lg' : 'bg-transparent py-4 md:py-6'"
+         class="fixed top-0 left-0 w-full z-50 transition-all duration-500 px-4 xs:px-6 sm:px-8">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Logo - Q terroso elegante -->
+<div class="flex items-center space-x-2">
+    <div class="relative w-8 h-8 md:w-10 md:h-10">
+        <!-- Base terrosa com camadas -->
+        <div class="absolute inset-0 bg-gradient-to-br from-clay via-taupe to-noir rounded-full shadow-lg"></div>
+        <!-- Camada sutil de textura -->
+        <div class="absolute inset-1 bg-gradient-to-tr from-clay/80 to-taupe/60 rounded-full"></div>
+        <!-- Q em relevo -->
+        <div class="absolute inset-0 flex items-center justify-center">
+            <span class="font-playfair font-bold text-white text-lg md:text-xl tracking-tighter 
+                       drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]">Q</span>
+        </div>
+        <!-- Detalhe em relevo no círculo -->
+        <div class="absolute inset-2 border border-white/10 rounded-full"></div>
+        <!-- Ponto em destaque -->
+        <div class="absolute bottom-1.5 right-1.5 w-2 h-2 md:w-2.5 md:h-2.5 bg-white/30 rounded-full shadow-inner"></div>
+    </div>
+    
+    <div>
+        <h1 class="font-cormorant text-xl md:text-2xl font-semibold tracking-wider text-noir break-word">Quartier Capote</h1>
+        <p style="color: white;" class="text-xxs md:text-xs text-taupe font-montserrat tracking-widest">ALTO PADRÃO</p>
+    </div>
+</div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-6 lg:space-x-10">
+                <a href="#hero" :class="activeSection === 'hero' ? 'text-clay font-semibold' : 'text-noir hover:text-clay'" class="transition-colors duration-300 text-sm lg:text-base">Home</a>
+                <a href="#video" :class="activeSection === 'video' ? 'text-clay font-semibold' : 'text-noir hover:text-clay'" class="transition-colors duration-300 text-sm lg:text-base ">Vídeo</a>
+                <a href="#gallery" :class="activeSection === 'gallery' ? 'text-clay font-semibold' : 'text-noir hover:text-clay'" class="transition-colors duration-300 text-sm lg:text-base">Galeria</a>
+                <a href="#specs" :class="activeSection === 'specs' ? 'text-clay font-semibold' : 'text-noir hover:text-clay'" class="transition-colors duration-300 text-sm lg:text-base">Ficha Técnica</a>
+                <a href="#contact" :class="activeSection === 'contact' ? 'text-clay font-semibold' : 'text-noir hover:text-clay'" class="transition-colors duration-300 text-sm lg:text-base">Contato</a>
+                <a href="https://wa.me/5511972807662?text=Olá%20tenho%20interesse%20no%20Quartier%20Capote!%20Poderia%20me%20enviar%20mais%20informações%3F" target="_blank" 
+                   class="bg-clay text-white px-4 py-2 lg:px-6 lg:py-3 rounded-full hover:bg-noir transition-all duration-300 font-medium text-xs md:text-sm tracking-widest uppercase whitespace-nowrap">
+                    Agendar Visita
+                </a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button @click="isMenuOpen = !isMenuOpen" class="md:hidden text-noir" aria-label="Menu">
+                <i data-lucide="menu" x-show="!isMenuOpen" class="w-6 h-6"></i>
+                <i data-lucide="x" x-show="isMenuOpen" x-cloak class="w-6 h-6"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu - Versão que empurra conteúdo -->
+        <div x-show="isMenuOpen" x-cloak 
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 max-h-0"
+            x-transition:enter-end="opacity-100 max-h-96"
+            class="md:hidden overflow-hidden bg-white/95 backdrop-blur-sm shadow-lg rounded-lg mt-4 z-40 relative">
+            <div class="flex flex-col space-y-3 p-4">
+                <a href="#hero" @click="isMenuOpen = false" class="text-noir hover:text-clay transition-colors py-2 text-base">Home</a>
+                <a href="#video" @click="isMenuOpen = false"  class="text-noir hover:text-clay transition-colors py-2 text-base">Vídeo</a>
+                <a href="#gallery" @click="isMenuOpen = false" class="text-noir hover:text-clay transition-colors py-2 text-base">Galeria</a>
+                <a href="#specs" @click="isMenuOpen = false" class="text-noir hover:text-clay transition-colors py-2 text-base">Ficha Técnica</a>
+                <a href="#contact" @click="isMenuOpen = false" class="text-noir hover:text-clay transition-colors py-2 text-base">Contato</a>
+                <a href="https://wa.me/5511972807662?text=Olá%20tenho%20interesse%20no%20Quartier%20Capote!%20Poderia%20me%20enviar%20mais%20informações%3F" target="_blank" 
+                class="bg-clay text-white px-6 py-3 rounded-full hover:bg-noir transition-all duration-300 font-medium text-sm tracking-widest uppercase text-center mt-2">
+                    Agendar Visita
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="hero" class="hero-height flex items-center relative pt-16 md:pt-20">
+        <div class="max-w-7xl mx-auto px-4 xs:px-6 sm:px-8 py-12 md:py-20 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+                <!-- Left Content -->
+                <div class="animate-slide-up">
+                    <div class="mb-4 md:mb-6">
+                        <span class="text-clay font-montserrat tracking-widest text-xs md:text-sm uppercase" style="color: whitesmoke;">Exclusividade</span>
+                        <h1 class="font-playfair text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-noir mt-2 leading-tight text-balance">
+                            É sobre seus<br>
+                            <span class="italic text-clay">desejos.</span><br>
+                            É sobre <span class="italic">você.</span>
+                        </h1>
+                    </div>
+                    
+                    <p style="color: white;"  class="text-base md:text-lg text-taupe mb-6 md:mb-10 leading-relaxed max-w-xl text-balance">
+                        Entre o charme dos Jardins e a pluralidade de Pinheiros, surge o Quartier Capote. 
+                        Um empreendimento que refina o conceito de moradia, unindo requinte arquitetônico 
+                        à localização privilegiada de São Paulo.
+                    </p>
+                    
+                    <div class="flex flex-col xs:flex-row gap-3 md:gap-4">
+                        <a href="#video" class="bg-clay text-white px-6 py-3 md:px-8 md:py-4 rounded-full hover:bg-noir transition-all duration-300 font-medium text-xs md:text-sm tracking-widest uppercase text-center">
+                            Descobrir o Projeto
+                        </a>
+                        <a href="https://wa.me/5511972807662?text=Olá%20tenho%20interesse%20no%20Quartier%20Capote!%20Poderia%20me%20enviar%20mais%20informações%3F" target="_blank"
+                           class="bg-clay text-white px-6 py-3 md:px-8 md:py-4 rounded-full hover:bg-noir transition-all duration-300 font-medium text-xs md:text-sm tracking-widest uppercase text-center">
+                            Falar com Especialista
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Right - Featured Image -->
+                    <div class="relative animate-float mt-8 md:mt-0">
+                        <div class="relative overflow-hidden rounded-2xl shadow-2xl luxury-card">
+                            <!-- Alteração aqui: removida a altura fixa e ajustado o object-fit -->
+                            <img src="img/oferta-quartier-2.jpeg"
+                                alt="Quartier Capote - Visão do empreendimento"
+                                class="w-full h-auto md:h-[860px] object-cover object-[50%_25%] rounded-2xl shadow-2xl"
+                                loading="lazy">
+                            
+                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-6">
+                                <p class="text-white font-cormorant text-xl md:text-2xl italic"></p>
+                            </div>
+                        </div>
+                    
+                    <!-- Floating badge - apenas desktop -->
+                    <div class="hidden md:block absolute -top-5 -right-5 bg-white p-4 rounded-2xl shadow-xl luxury-card">
+                        <p class="font-bold text-clay text-lg">Exclusivo</p>
+                        <p class="text-xs text-taupe">Unidades Limitadas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Video Section -->
+<section id="video" class="py-12 md:py-20 bg-gradient-to-b from-champagne to-stone">
+  <div class="max-w-5xl mx-auto px-4 xs:px-6 sm:px-8">
+    <div class="text-center mb-10 md:mb-16">
+      <span class="text-clay font-montserrat tracking-widest text-xs md:text-sm uppercase" style="font-size:16px; color:#6e4b16;">Apresentação</span>
+      <h2 class="font-playfair text-3xl md:text-4xl lg:text-5xl text-noir mt-2 mb-3 md:mb-4"style="color:black;">O Empreendimento</h2>
+      <p class="text-taupe max-w-2xl mx-auto text-sm md:text-base" style="color:#242931;">
+        Assista ao vídeo exclusivo e conheça os detalhes que fazem do Quartier Capote 
+        uma referência em sofisticação e arquitetura.
+      </p>
+    </div>
+    
+    <!-- Video Player -->
+    <div class="relative rounded-xl md:rounded-2xl overflow-hidden shadow-2xl luxury-card">
+      <!-- Video Cover -->
+      <div class="relative">
+        <video 
+          id="mainVideo"
+          class="w-full h-auto max-h-[50vh] md:max-h-[600px] object-cover"
+          poster="img/quartier-4.png"
+          controls
+          controlsList="nodownload"
+          disablePictureInPicture
+          playsinline
+          preload="metadata"
+        >
+          <source src="video/quartier2.mp4" type="video/mp4">
+          Seu navegador não suporta o elemento de vídeo.
+        </video>
+        
+        <!-- Custom play overlay -->
+        <div id="playOverlay" 
+             class="absolute inset-0 flex items-center justify-center bg-black/10 hover:bg-black/20 transition-all duration-300">
+          <button id="playButton"
+                  class="bg-white/90 hover:bg-white w-14 h-14 md:w-20 md:h-20 rounded-full flex items-center justify-center transition-all duration-300 shadow-xl"
+                  aria-label="Reproduzir vídeo">
+            <i data-lucide="play" class="w-6 h-6 md:w-10 md:h-10 text-clay"></i>
+          </button>
+        </div>
+      </div>
+      
+      <div class="bg-white p-4 md:p-6">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h3 class="font-cormorant text-xl md:text-2xl text-noir" style="color:#5b390589;">Quartier Capote</h3>
+            <p class="text-taupe text-xs md:text-sm" style="font-size:14px; color:#353330;">Uma experiência única em alto padrão</p>
+          </div>
+          <div class="flex gap-2 w-full sm:w-auto">
+            <a href="https://api.whatsapp.com/send?phone=5511972807662&text=Ol%C3%A1%20tenho%20interesse%20no%20Quartier%20Capote!%20Poderia%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"  target="_blank" 
+               class="bg-clay text-white px-4 py-2 md:px-6 md:py-3 rounded-full hover:bg-noir transition-all duration-300 font-medium text-xs md:text-sm tracking-widest uppercase text-center flex-1 sm:flex-none">
+              Solicitar Tour Virtual
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    
+   <!-- Gallery Section -->
+<section id="gallery" class="py-12 md:py-20 bg-noir text-white">
+  <div class="max-w-7xl mx-auto px-4 xs:px-6 sm:px-8">
+    <div class="text-center mb-10 md:mb-16">
+      <span class="text-clay font-montserrat tracking-widest text-xs md:text-sm uppercase">Imagens</span>
+      <h2 class="font-playfair text-3xl md:text-4xl lg:text-5xl mt-2 mb-3 md:mb-4" style="color:#5b3905f3;">Galeria Exclusiva</h2>
+      <p class="text-stone max-w-2xl mx-auto text-sm md:text-base">
+        Explore os ambientes que definem o padrão de excelência do Quartier Capote.
+      </p>
+    </div>
+
+    <!-- Swiper Carousel -->
+    <div class="swiper">
+      <div class="swiper-wrapper">
+
+        <!-- Slide 1 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/img.jpeg" alt="Quartier Capote" class="w-full h-full object-cover" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Quartier Capote Valente</h3>
+              <p class="text-stone text-xs md:text-base">Integração perfeita entre conforto e design</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/img-1.jpeg" alt="Quartier Capote - Fachada" class="w-full h-full object-cover" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Fachada</h3>
+              <p class="text-stone text-xs md:text-base">Lobby / Hall de Entrada com design contemporâneo.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/img-2.jpeg" alt="Quartier Capote - Fachada-2" class="w-full h-full object-cover" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Fachada Geral</h3>
+              <p class="text-stone text-xs md:text-base">Espaços pensados para bem-estar e convívio</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/img-3.png" alt="Quartier Capote - Fachada-3" class="w-full h-full object-cover" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Arquitetura</h3>
+              <p class="text-stone text-xs md:text-base">Fachada emblemática por Königsberger Vannucchi</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/img-4.png" alt="Acesso-Garagem" class="w-full h-full object-cover" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Acesso Garagem</h3>
+              <p class="text-stone text-xs md:text-base">Vagas de estacionamento com acesso facilitado e organização eficiente.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/img-6.png" alt="Piscina" class="w-full h-full object-cover" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Piscina</h3>
+              <p class="text-stone text-xs md:text-base">Área de lazer com piscina projetada para relaxamento e bem-estar, integrada ao espaço externo e à paisagem do empreendimento.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/img-7.png" alt="Suite Master" class="w-full h-full object-cover" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Suítes Master</h3>
+              <p class="text-stone text-xs md:text-base">A suíte master foi pensada como um verdadeiro refúgio de conforto e privacidade.
+Com dimensões generosas, iluminação natural e acabamento premium, oferece uma experiência de morar exclusiva.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/img-8.png" alt="Suite Master Planta" class="w-full h-full object-contain" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Suíte Master Planta</h3>
+              <p class="text-stone text-xs md:text-base">Dormitórios versáteis e bem distribuídos, Ambientes que combinam conforto, funcionalidade e flexibilidade.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/img-9.png" alt="Living 2-Suites" class="w-full h-full object-cover" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Living 2 Suítes</h3>
+              <p class="text-stone text-xs md:text-base">O living integrado foi projetado para oferecer amplitude, elegância e luminosidade natural, criando um ambiente perfeito para convivência e momentos especiais.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/img-10.png" alt="Living 2-Suites Planta" class="w-full h-full object-contain" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Living 2-Suites Planta</h3>
+              <p class="text-stone text-xs md:text-base">O living integrado valoriza a entrada de luz natural e cria um ambiente elegante e acolhedor, perfeito para receber e viver momentos especiais.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 11 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/img-11.png" alt="Living Integrado + 1 Dormitório" class="w-full h-full object-cover" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Living Integrado + 1 Dormitório</h3>
+              <p class="text-stone text-xs md:text-base">O living integrado foi projetado para otimizar o espaço com elegância e funcionalidade, criando um ambiente moderno, iluminado e acolhedor.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 12 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/img-12.png" alt="Living Integrado + 1 Dormitório Planta" class="w-full h-full object-contain" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Living Integrado + 1 Dormitório Planta</h3>
+              <p class="text-stone text-xs md:text-base">A integração entre sala de estar, jantar e cozinha proporciona fluidez ao layout, ampliando a sensação de espaço e valorizando o design contemporâneo.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 13 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/img-13.png" alt="Living Studio" class="w-full h-full object-cover" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Living Studio</h3>
+              <p class="text-stone text-xs md:text-base">O living studio foi projetado para unir funcionalidade, conforto e design em um único ambiente integrado.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 14 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/img-14.png" alt="Living Studio Planta" class="w-full h-full object-contain" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Living Studio Planta</h3>
+              <p class="text-stone text-xs md:text-base">Com layout inteligente, o espaço aproveita cada metro quadrado de forma eficiente, proporcionando amplitude, luminosidade natural e versatilidade.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 15 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/quartier-3.png" alt="Localização" class="w-full h-full object-contain" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Localização</h3>
+              <p class="text-stone text-xs md:text-base">Um endereço onde conveniência, gastronomia e lifestyle urbano se encontram.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 16 -->
+        <div class="swiper-slide">
+          <div class="h-[300px] xs:h-[350px] sm:h-[400px] md:h-[500px] lg:h-[600px] rounded-xl md:rounded-2xl overflow-hidden relative">
+            <img src="img/img-15.png" alt="You Fechamento" class="w-full h-full object-cover" loading="lazy">
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-8">
+              <h3 class="font-cormorant text-xl md:text-3xl">Obrigado pela sua visita.</h3>
+              <p class="text-stone text-xs md:text-base">Estamos à disposição para transformar esse projeto no seu novo endereço.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Pagination -->
+      <div class="swiper-pagination mt-4 md:mt-8"></div>
+
+      <!-- Navigation -->
+      <div class="swiper-button-next !hidden md:!flex text-clay"></div>
+      <div class="swiper-button-prev !hidden md:!flex text-clay"></div>
+    </div>
+  </div>
+</section>
+    
+    <!-- Specifications Section -->
+    <section id="specs" class="py-12 md:py-20 bg-gradient-to-b from-white to-champagne">
+        <div class="max-w-6xl mx-auto px-4 xs:px-6 sm:px-8">
+            <div class="text-center mb-10 md:mb-16">
+                <span class="text-clay font-montserrat tracking-widest text-xs md:text-sm uppercase">Detalhes</span>
+                <h2 class="font-playfair text-3xl md:text-4xl lg:text-5xl text-noir mt-2 mb-3 md:mb-4" style="color:#5b390589;">Ficha Técnica</h2>
+                <p class="text-taupe max-w-2xl mx-auto text-sm md:text-base" style="color:#363534;">
+                    Conheça os detalhes que fazem do Quartier Capote uma referência em sofisticação e qualidade.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 luxury-card">
+                    <div class="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-champagne rounded-full flex items-center justify-center mb-4 md:mb-6">
+                        <i data-lucide="building" class="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 text-clay"></i>
+                    </div>
+                    <h3 style="color:#363534;" class="font-cormorant text-xl md:text-2xl text-noir mb-2 md:mb-4">Arquitetura</h3>
+                    <p class="text-taupe text-xs md:text-sm mb-2 md:mb-4">Assinada pelo renomado escritório</p>
+                    <p class="font-medium text-base md:text-lg lg:text-xl text-noir" style="color:#363534;">Königsberger Vannucchi</p>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 luxury-card">
+                    <div class="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-champagne rounded-full flex items-center justify-center mb-4 md:mb-6">
+                        <i data-lucide="trees" class="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 text-clay"></i>
+                    </div>
+                    <h3 style="color:#363534;" class="font-cormorant text-xl md:text-2xl text-noir mb-2 md:mb-4">Paisagismo</h3>
+                    <p class="text-taupe text-xs md:text-sm mb-2 md:mb-4">Ambientes integrados à natureza por</p>
+                    <p class="font-medium text-base md:text-lg lg:text-xl text-noir" style="color:#363534;">Núcleo Arquitetura da Paisagem</p>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 luxury-card">
+                    <div class="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-champagne rounded-full flex items-center justify-center mb-4 md:mb-6">
+                        <i data-lucide="palette" class="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 text-clay"></i>
+                    </div>
+                    <h3 style="color:#363534;" class="font-cormorant text-xl md:text-2xl text-noir mb-2 md:mb-4">Decoração</h3>
+                    <p class="text-taupe text-xs md:text-sm mb-2 md:mb-4">Interiores assinados pelo conceituado</p>
+                    <p class="font-medium text-base md:text-lg lg:text-xl text-noir" style="color:#363534;">Estúdio Dutra</p>
+                </div>
+                
+                <!-- Card 4 -->
+                <div class="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 luxury-card">
+                    <div class="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-champagne rounded-full flex items-center justify-center mb-4 md:mb-6">
+                        <i data-lucide="layers" class="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 text-clay"></i>
+                    </div>
+                    <h3 style="color:#363534;" class="font-cormorant text-xl md:text-2xl text-noir mb-2 md:mb-4">Tipologias</h3>
+                    <p class="text-taupe text-xs md:text-sm mb-2 md:mb-4">Variedade de plantas para todos os perfis</p>
+                    <p class="font-medium text-base md:text-lg lg:text-xl text-noir" style="color:#363534;">Studios+, 1 Dorm+, 2 e 3 Dorms</p>
+                </div>
+                
+                <!-- Card 5 -->
+                <div class="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 luxury-card">
+                    <div class="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-champagne rounded-full flex items-center justify-center mb-4 md:mb-6">
+                        <i data-lucide="ruler" class="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 text-clay"></i>
+                    </div>
+                    <h3 style="color:#363534;" class="font-cormorant text-xl md:text-2xl text-noir mb-2 md:mb-4">Metragens</h3>
+                    <p class="text-taupe text-xs md:text-sm mb-2 md:mb-4">Amplos espaços planejados</p>
+                    <p class="font-medium text-base md:text-lg lg:text-xl text-noir" style="color:#363534;">25m² a 90m²</p>
+                </div>
+                
+                <!-- Card 6 -->
+                <div class="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 luxury-card">
+                    <div class="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-champagne rounded-full flex items-center justify-center mb-4 md:mb-6">
+                        <i data-lucide="car" class="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 text-clay"></i>
+                    </div>
+                    <h3 style="color:#363534;" class="font-cormorant text-xl md:text-2xl text-noir mb-2 md:mb-4">Vagas</h3>
+                    <p class="text-taupe text-xs md:text-sm mb-2 md:mb-4">Conforto e segurança para seu veículo</p>
+                    <p class="font-medium text-base md:text-lg lg:text-xl text-noir" style="color:#363534;">0 a 2 Vagas Demarcadas</p>
+                </div>
+            </div>
+            
+              <!-- Áreas Comuns -->
+<div class="mt-12 md:mt-20">
+    <h3 class="font-playfair text-3xl md:text-4xl text-center text-navy mb-8 md:mb-12">Áreas Comuns</h3>
+    
+    <!-- Áreas Comuns Residencial -->
+    <div class="mb-10">
+        <h4 class="font-cormorant text-2xl text-navy mb-6 text-center">Residencial</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white rounded-xl p-6 luxury-card">
+                <h5 class="font-cormorant text-xl text-navy mb-3">Térreo</h5>
+                <ul class="space-y-2 text-taupe text-sm">
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Piscina Adulto
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Piscina Infantil
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Piscina Coberta
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Pet Place
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Playground
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Churrasqueira
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Salão de Festas
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-white rounded-xl p-6 luxury-card">
+                <h5 class="font-cormorant text-xl text-navy mb-3">Térreo (continuação)</h5>
+                <ul class="space-y-2 text-taupe text-sm">
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Miniquadra
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Brinquedoteca
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Sauna Úmida
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Green Escape (Praças Verticais)
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-white rounded-xl p-6 luxury-card">
+                <h5 class="font-cormorant text-xl text-navy mb-3">9º Pavimento</h5>
+                <ul class="space-y-2 text-taupe text-sm">
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Academia (Fitness)
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Fitness Externo
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Sala de Massagem
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Sala Multiuso
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Lavanderia
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Coworking
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Sala de Jogos
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Áreas Comuns Serviço de Moradia -->
+    <div>
+        <h4 class="font-cormorant text-2xl text-navy mb-6 text-center">Serviço de Moradia</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white rounded-xl p-6 luxury-card">
+                <h5 class="font-cormorant text-xl text-navy mb-3">Térreo</h5>
+                <ul class="space-y-2 text-taupe text-sm">
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Bicicletário
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Delivery
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Acesso Social
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="bg-white rounded-xl p-6 luxury-card">
+                <h5 class="font-cormorant text-xl text-navy mb-3">1º Pavimento</h5>
+                <ul class="space-y-2 text-taupe text-sm">
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Spa
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Churrasqueira Gourmet
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Academia
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Fitness Externo
+                    </li>
+                    <li class="flex items-center">
+                        <i data-lucide="check" class="w-4 h-4 text-clay mr-2"></i>
+                        Lavanderia
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+            <!-- Additional details -->
+            <div class="mt-10 md:mt-16 bg-white rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8 luxury-card max-w-4xl mx-auto">
+                <h3 class="font-cormorant text-2xl md:text-3xl text-center text-noir mb-6 md:mb-8" style="color:#363534;">Características Exclusivas</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div class="flex items-start space-x-3 md:space-x-4">
+                        <i data-lucide="check-circle" class="w-5 h-5 md:w-6 md:h-6 text-clay mt-0.5 md:mt-1 flex-shrink-0"></i>
+                        <div>
+                            <h4 style="color:#73431292;" class="font-semibold text-noir mb-1 text-sm md:text-base">Acabamentos de Última Geração</h4>
+                            <p class="text-taupe text-xs md:text-sm">Materiais selecionados de alta qualidade</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 md:space-x-4">
+                        <i data-lucide="check-circle" class="w-5 h-5 md:w-6 md:h-6 text-clay mt-0.5 md:mt-1 flex-shrink-0"></i>
+                        <div>
+                            <h4 style="color:#73431292;" class="font-semibold text-noir mb-1 text-sm md:text-base">Localização Privilegiada</h4>
+                            <p class="text-taupe text-xs md:text-sm">Entre Jardins e Pinheiros</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 md:space-x-4">
+                        <i data-lucide="check-circle" class="w-5 h-5 md:w-6 md:h-6 text-clay mt-0.5 md:mt-1 flex-shrink-0"></i>
+                        <div>
+                            <h4 style="color:#73431292;" class="font-semibold text-noir mb-1 text-sm md:text-base">Área de Lazer Completa</h4>
+                            <p class="text-taupe text-xs md:text-sm">Piscina, fitness, spa e lounge</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 md:space-x-4">
+                        <i data-lucide="check-circle" class="w-5 h-5 md:w-6 md:h-6 text-clay mt-0.5 md:mt-1 flex-shrink-0"></i>
+                        <div>
+                            <h4 style="color:#73431292;" class="font-semibold text-noir mb-1 text-sm md:text-base">Segurança 24h</h4>
+                            <p class="text-taupe text-xs md:text-sm">Monitoramento integral do condomínio</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+         
+
+        
+   
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-12 md:py-20 bg-noir text-white">
+        <div style="background: rgb(46, 41, 41);" class="max-w-6xl mx-auto px-4 xs:px-6 sm:px-8">
+            <div class="text-center mb-10 md:mb-16">
+                <span class="text-clay font-montserrat tracking-widest text-xs md:text-sm uppercase">Contato</span>
+                <h2 class="font-playfair text-3xl md:text-4xl lg:text-5xl mt-2 mb-3 md:mb-4">Fale com a Especialista</h2>
+                <p class="text-stone max-w-2xl mx-auto text-sm md:text-base">
+                    Vanessa Fernandes, sua consultora exclusiva para aquisição no Quartier Capote Valente.
+                </p>
+            </div>
+            
+              <!-- Contact Info YOU INC -->
+                <div>
+                    <div class="mb-8 md:mb-10">
+                        <h3 class="font-cormorant text-2xl md:text-3xl mb-2">You, inc</h3>
+                        <p class="text-stone text-sm md:text-base mb-3 md:mb-4">Mais de 15 anos de tradição no mercado imobiliário</p>
+                        <div class="inline-block bg-clay/20 border border-clay/30 rounded-full px-3 py-1 md:px-4 md:py-1">
+                            <p class="text-clay font-medium text-sm md:text-base">+ de R$ 10 bilhões em VGV</p>
+                        </div>
+                    </div>
+
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
+                <!-- Contact Info -->
+                <div>
+                    <div class="mb-8 md:mb-10">
+                        <h3 class="font-cormorant text-2xl md:text-3xl mb-2">Vanessa Fernandes</h3>
+                        <p class="text-stone text-sm md:text-base mb-3 md:mb-4">Especialista em Negócios Imobiliários</p>
+                        <div class="inline-block bg-clay/20 border border-clay/30 rounded-full px-3 py-1 md:px-4 md:py-1">
+                            <p class="text-clay font-medium text-sm md:text-base">CRECI: 172.850-F</p>
+                        </div>
+                    </div>
+                    
+                  <!-- Contact Details -->
+                        <div class="space-y-4 md:space-y-6">
+                        <a href="https://api.whatsapp.com/send?phone=5511972807662&text=Ol%C3%A1%20tenho%20interesse%20no%20Quartier%20Capote!%20Poderia%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"  target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex items-center space-x-3 md:space-x-4 group">
+                            <div class="w-10 h-10 md:w-12 md:h-12 bg-clay/20 rounded-full flex items-center justify-center group-hover:bg-clay transition-all duration-300">
+                            <i data-lucide="phone" class="w-5 h-5 md:w-6 md:h-6 text-clay group-hover:text-white"></i>
+                            </div>
+                            <div>
+                            <p class="text-stone text-xs md:text-sm">Telefone / WhatsApp</p>
+                            <p class="text-lg md:text-xl font-medium group-hover:text-clay transition-colors duration-300">(11) 97280-7662</p>
+                            </div>
+                        
+                                        <a href="https://www.instagram.com/vanessaimoveisfn/?__pwa=1" target="_blank" class="flex items-center space-x-3 md:space-x-4 group">
+                            <div class="w-10 h-10 md:w-12 md:h-12 bg-clay/20 rounded-full flex items-center justify-center group-hover:bg-clay transition-all duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 md:w-6 md:h-6 text-clay group-hover:text-white">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-stone text-xs md:text-sm">Instagram</p>
+                                <p class="text-lg md:text-xl font-medium group-hover:text-clay transition-colors duration-300">@vanessaimoveisfn</p>
+                            </div>
+                        </a>
+
+                        <a href="https://www.youtube.com/@VanessaIm%C3%B3veis" target="_blank" class="flex items-center space-x-3 md:space-x-4 group">
+                            <div class="w-10 h-10 md:w-12 md:h-12 bg-clay/20 rounded-full flex items-center justify-center group-hover:bg-clay transition-all duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 md:w-6 md:h-6 text-clay group-hover:text-white">
+                                    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                                    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-stone text-xs md:text-sm">YouTube</p>
+                                <p class="text-lg md:text-xl font-medium group-hover:text-clay transition-colors duration-300">@VanessaImóveis</p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <!-- CTA Button -->
+                    <div class="mt-8 md:mt-10">
+                        <a href="https://api.whatsapp.com/send?phone=5511972807662&text=Ol%C3%A1%20tenho%20interesse%20no%20Quartier%20Capote!%20Poderia%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" 
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center justify-center bg-clay text-white px-6 py-3 md:px-8 md:py-4 rounded-full hover:bg-white hover:text-clay transition-all duration-300 font-medium text-xs md:text-sm tracking-widest uppercase w-full lg:w-auto">
+                            <i data-lucide="message-circle" class="w-4 h-4 md:w-5 md:h-5 mr-2"></i>
+                               Conversar no WhatsApp
+                        </a>
+                    </div>
+                </div>
+                
+                  <!-- Contact Form -->
+            <div class="bg-white/10 glass-effect rounded-xl md:rounded-2xl p-4 md:p-6 lg:p-8">
+                <h3 class="font-cormorant text-2xl md:text-3xl mb-4 md:mb-6">Solicitar Informações</h3>
+                
+                <!-- Mensagem de Sucesso (Oculto inicialmente) -->
+                <div id="formSuccess" class="hidden bg-green-500/20 border border-green-500/30 rounded-xl p-6 mb-6 text-center">
+                    <div class="flex flex-col items-center">
+                        <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mb-4">
+                            <i data-lucide="check-circle" class="w-8 h-8 text-green-400"></i>
+                        </div>
+                        <h4 class="font-cormorant text-2xl text-green-300 mb-2">Mensagem Enviada!</h4>
+                        <p class="text-stone text-sm mb-4">Obrigado pelo seu contato. A Vanessa entrará em contato em breve.</p>
+                        <div class="flex items-center justify-center space-x-2">
+                            <div class="w-6 h-6 border-2 border-green-400 rounded-full animate-spin"></div>
+                            <p class="text-green-300 text-xs">Atualizando página em <span id="countdown">3</span>s...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Formulário -->
+                <form id="contactForm" action="https://formspree.io/f/myzjwqpz" method="POST" class="space-y-4 md:space-y-6">
+                    <div>
+                        <label for="name" class="block text-stone mb-1 md:mb-2 text-sm md:text-base">Nome completo *</label>
+                        <input type="text" id="name" name="name"
+                               class="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2 md:px-4 md:py-3 text-white focus:outline-none focus:border-clay transition-colors duration-300 text-sm md:text-base"
+                               required>
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-stone mb-1 md:mb-2 text-sm md:text-base">E-mail *</label>
+                        <input type="email" id="email" name="email"
+                               class="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2 md:px-4 md:py-3 text-white focus:outline-none focus:border-clay transition-colors duration-300 text-sm md:text-base"
+                               required>
+                    </div>
+                    
+                    <div>
+                        <label for="phone" class="block text-stone mb-1 md:mb-2 text-sm md:text-base">Telefone/WhatsApp *</label>
+                        <input type="tel" id="phone" name="phone"
+                               class="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2 md:px-4 md:py-3 text-white focus:outline-none focus:border-clay transition-colors duration-300 text-sm md:text-base"
+                               required>
+                    </div>
+                    
+                    <div>
+                        <label for="message" class="block text-stone mb-1 md:mb-2 text-sm md:text-base">Mensagem</label>
+                        <textarea id="message" name="message" rows="3"
+                                  class="w-full bg-white/5 border border-white/20 rounded-lg px-3 py-2 md:px-4 md:py-3 text-white focus:outline-none focus:border-clay transition-colors duration-300 text-sm md:text-base"
+                                  placeholder="Conte-nos sobre seu interesse no Quartier Capote..."></textarea>
+                    </div>
+                    
+                    <!-- Campo hidden para identificar a origem -->
+                    <input type="hidden" name="_subject" value="Novo contato - Quartier Capote">
+                    <input type="hidden" name="_replyto" id="replyTo">
+                    
+                    <button type="submit" id="submitBtn"
+                            class="w-full bg-clay text-white px-6 py-3 md:px-8 md:py-4 rounded-full hover:bg-white hover:text-clay transition-all duration-300 font-medium text-xs md:text-sm tracking-widest uppercase">
+                        <span id="submitText">Enviar Solicitação</span>
+                        <span id="loadingSpinner" class="hidden">
+                            <i data-lucide="loader-2" class="w-4 h-4 md:w-5 md:h-5 animate-spin ml-2"></i>
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+    
+    <!-- Footer -->
+<footer style="background: rgb(46, 41, 41);" class="bg-noir border-t border-white/10 py-8 md:py-12">
+    <div class="max-w-7xl mx-auto px-4 xs:px-6 sm:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 md:gap-0">
+            <div class="mb-4 md:mb-0">
+                <div class="flex items-center space-x-2 mb-3 md:mb-4">
+                    <!-- Logo - Q terroso elegante (MESMO DO HEADER) -->
+                    <div class="relative w-6 h-6 md:w-8 md:h-8">
+                        <!-- Base terrosa com camadas -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-clay via-taupe to-noir rounded-full shadow-lg"></div>
+                        <!-- Camada sutil de textura -->
+                        <div class="absolute inset-[2px] bg-gradient-to-tr from-clay/80 to-taupe/60 rounded-full"></div>
+                        <!-- Q em relevo -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="font-playfair font-bold text-white text-sm md:text-base tracking-tighter 
+                                       drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)]">Q</span>
+                        </div>
+                        <!-- Detalhe em relevo no círculo -->
+                        <div class="absolute inset-1 border border-white/10 rounded-full"></div>
+                        <!-- Ponto em destaque (menor para o tamanho reduzido) -->
+                        <div class="absolute bottom-1 right-1 w-1.5 h-1.5 md:w-2 md:h-2 bg-white/30 rounded-full shadow-inner"></div>
+                    </div>
+                    
+                    <h2 class="font-cormorant text-xl md:text-2xl font-semibold text-white">Quartier Capote</h2>
+                </div>
+                <p class="text-stone text-xs md:text-sm max-w-md">
+                    Incorporação imobiliária registrada sob o nº R.2 da matrícula nº 112.057, 
+                    do 13º Oficial de Registro de Imóveis de São Paulo.
+                </p>
+            </div>
+            
+            <div class="flex space-x-4 md:space-x-6">
+                <a href="https://www.instagram.com/vanessaimoveisfn/?__pwa=1" target="_blank" 
+                class="w-8 h-8 md:w-10 md:h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-clay transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 md:w-5 md:h-5 text-white">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                </a>
+                <a href="https://www.youtube.com/@VanessaIm%C3%B3veis" target="_blank" 
+                class="w-8 h-8 md:w-10 md:h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-clay transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 md:w-5 md:h-5 text-white">
+                        <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                        <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                    </svg>
+                </a>
+                <a href="https://api.whatsapp.com/send?phone=5511972807662&text=Ol%C3%A1%20tenho%20interesse%20no%20Quartier%20Capote!%20Poderia%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F" target="_blank" 
+                class="w-8 h-8 md:w-10 md:h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-clay transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 md:w-5 md:h-5 text-white">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+        
+        <div class="border-t border-white/10 mt-6 md:mt-8 pt-6 md:pt-8 text-center">
+            <p class="text-stone text-xs md:text-sm">
+                &copy; 2023 Quartier Capote. Todos os direitos reservados. | 
+                Desenvolvido com exclusividade para Vanessa Fernandes.
+            </p>
+        </div>
+    </div>
+</footer>
+
+
+       <!-- ========== FLOATING RECOMMENDATION COMPONENT ========== -->
+<!-- (refactored – keeps original identity, removes demo content, adds 1min cooldown, mobile drawer) -->
+<!-- ========== FLOATING RECOMMENDATION COMPONENT ========== -->
+<div
+  x-data="floatingRecommendations()"
+  x-init="init"
+  x-cloak
+  x-show="visible"
+  x-transition:enter="transition ease-out duration-500"
+  x-transition:enter-start="opacity-0 translate-x-8"
+  x-transition:enter-end="opacity-100 translate-x-0"
+  x-transition:leave="transition ease-in duration-300"
+  x-transition:leave-start="opacity-100 translate-x-0"
+  x-transition:leave-end="opacity-0 translate-x-8"
+  class="fixed z-50"
+  :class="{
+    'top-24 right-6 w-80': !isMobile && expanded,
+    'top-24 right-6 w-auto': !isMobile && !expanded,
+    'inset-x-0 bottom-20 w-full': isMobile && expanded,
+    'bottom-0 right-6 w-auto': isMobile && !expanded  
+  }"
+>
+  <!-- painel expandido -->
+  <div x-show="expanded" x-collapse.duration.300ms class="origin-top-right" :class="{'rounded-t-3xl overflow-hidden': isMobile}">
+    <div class="bg-white/90 backdrop-blur-xl shadow-2xl border border-white/30 overflow-hidden luxury-card transition-all duration-300"
+         :class="{'rounded-t-3xl rounded-b-none': isMobile, 'rounded-3xl': !isMobile}">
+      
+      <!-- cabeçalho com gradiente (mesmo estilo) -->
+      <div class="bg-gradient-to-r from-clay/20 via-transparent to-clay/10 px-5 py-4 flex justify-between items-center border-b border-champagne/30">
+        <div>
+          <h3 class="font-playfair text-xl text-clay">Park Vila Mariana<br><span class="text-clay italic">Próximo ao Parque Ibirapuera</span></h3>
+          <p class="text-taupe text-xs mt-0.5 max-w-[180px]">Descubra outros projetos exclusivos</p>
+        </div>
+        <div class="flex gap-1">
+          <!-- minimizar / seta (desktop: vira ícone, mobile: seta pra baixo) -->
+          <button @click="expanded = false" class="w-8 h-8 rounded-full bg-white/80 flex items-center justify-center text-clay hover:bg-clay hover:text-white transition-all shadow-sm">
+            <i data-lucide="chevron-right" class="w-4 h-4" x-show="!isMobile"></i>
+            <i data-lucide="chevron-down" class="w-4 h-4" x-show="isMobile"></i>
+          </button>
+          <!-- fechar (guarda timestamp e oculta) -->
+          <button @click="closePanel()" class="w-8 h-8 rounded-full bg-white/80 flex items-center justify-center text-taupe hover:bg-clay hover:text-white transition-all shadow-sm">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- lista vertical com snap (mantida) -->
+      <div class="p-4 pb-16 snap-container hide-scrollbar overflow-y-auto"
+     :class="isMobile ? 'max-h-[60vh]' : ''"
+     style="max-height: 340px;">
+        
+        <!-- CARD 1 – Park Mariana Exclusive (com link real) -->
+        <a href="https://teste-park-vila-mariana.netlify.app/" target="_blank" class="block snap-item bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 mb-4 group">
+          <div class="relative h-36 overflow-hidden">
+            <img src="img/park/park-1.png" alt="Park Mariana" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent"></div>
+            <span class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm text-clay text-xs px-2 py-1 rounded-full font-medium">Exclusive</span>
+          </div>
+          <div class="p-4">
+            <h4 class="font-playfair text-lg text-noir">Park Mariana Exclusive</h4>
+            <p class="text-taupe text-xs flex items-center gap-1 mt-0.5"><i data-lucide="map-pin" class="w-3 h-3 text-clay"></i> R. Madre Cabrini, 341</p>
+            <div class="flex flex-wrap gap-1 my-2">
+              <span class="bg-champagne/40 text-taupe text-[10px] px-2 py-1 rounded-full">25m piscina</span>
+              <span class="bg-champagne/40 text-taupe text-[10px] px-2 py-1 rounded-full">spa</span>
+              <span class="bg-champagne/40 text-taupe text-[10px] px-2 py-1 rounded-full">fitness</span>
+            </div>
+            <div class="flex justify-between items-center mt-2 pt-2 border-t border-champagne/30">
+              <span class="text-xs text-taupe">3 suítes de 123m²</span>
+              <span class="text-xs bg-clay text-white px-4 py-1.5 rounded-full hover:bg-noir transition flex items-center gap-1 group-hover:bg-noir">
+                Saiba Mais <i data-lucide="arrow-right" class="w-3 h-3"></i>
+              </span>
+            </div>
+          </div>
+        </a>
+
+        <!-- CARD 2 – Vista Madalena (link) -->
+        <a href="https://teste-vista-madalena.netlify.app/" target="_blank" class="block snap-item bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 mb-14 group **md:-mt-8**">
+          <div class="relative h-36 overflow-hidden">
+            <img src="img/vista/AD_YOU_VISTA_MADALENA_BOOK_CLIENTE_DIGITAL-4-1.pdf.png" alt="fachada" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent"></div>
+            <span class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm text-clay text-xs px-2 py-1 rounded-full font-medium">áreas comuns</span>
+          </div>
+          <div class="p-4">
+            <h4 class="font-playfair text-lg text-noir">Vista Madalena</h4>
+            <p class="text-taupe text-xs flex items-center gap-1 mt-0.5"><i data-lucide="map-pin" class="w-3 h-3 text-clay"></i> Vila Mariana</p>
+            <div class="flex flex-wrap gap-1 my-2">
+              <span class="bg-champagne/40 text-taupe text-[10px] px-2 py-1 rounded-full">brinquedoteca</span>
+              <span class="bg-champagne/40 text-taupe text-[10px] px-2 py-1 rounded-full">pet place</span>
+              <span class="bg-champagne/40 text-taupe text-[10px] px-2 py-1 rounded-full">raia 25m</span>
+            </div>
+            <div class="flex justify-between items-center mt-2 pt-2 border-t border-champagne/30">
+              <span class="text-xs text-taupe">3 dorms · 90m²</span>
+              <span class="text-xs bg-clay text-white px-4 py-1.5 rounded-full hover:bg-noir transition flex items-center gap-1 group-hover:bg-noir">
+                Saiba Mais <i data-lucide="arrow-right" class="w-3 h-3"></i>
+              </span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+      
+      <!-- rodapé discreto (mantido) -->
+      <div class="px-5 py-2 border-t border-champagne/30 text-center">
+        <span class="text-[10px] text-taupe tracking-wider">exclusividade you,inc · 4 empreendimentos</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- versão minimizada (bolinha/tab) – desktop & mobile -->
+  <div x-show="!expanded" x-transition.duration.200 class="cursor-pointer group" @click="expanded = true">
+    <!-- mobile: bottom tab (flutuante arredondado) -->
+    <template x-if="isMobile">
+      <div class="bg-white/80 backdrop-blur-md rounded-full shadow-xl px-5 py-3 flex items-center gap-2 border border-white/40">
+        <span class="w-2 h-2 bg-clay rounded-full animate-pulse"></span>
+        <span class="font-montserrat text-sm font-medium text-noir">Empreendimentos</span>
+        <i data-lucide="chevron-up" class="w-4 h-4 text-clay"></i>
+      </div>
+    </template>
+    <!-- desktop: painel lateral retraído (ícone + texto) -->
+    <template x-if="!isMobile">
+      <div class="bg-white/80 backdrop-blur-xl rounded-2xl shadow-xl px-4 py-3 flex items-center gap-2 border border-white/40 group-hover:bg-white transition">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-clay to-taupe flex items-center justify-center text-white font-playfair text-sm">P</div>
+        <div class="flex flex-col">
+          <span class="font-playfair text-sm leading-tight">Empreendimentos <span class="text-clay">semelhantes</span></span>
+          <span class="text-[10px] text-taupe">clique para expandir</span>
+        </div>
+        <i data-lucide="chevron-left" class="w-4 h-4 text-clay ml-2"></i>
+      </div>
+    </template>
+  </div>
+</div>
+
+
+<!-- ========== FIM DO COMPONENTE ========== -->
+    
+    <!-- Floating WhatsApp Button -->
+    <a href="https://api.whatsapp.com/send?phone=5511972807662&text=Ol%C3%A1%20tenho%20interesse%20no%20Quartier%20Capote!%20Poderia%20me%20enviar%20mais%20informa%C3%A7%C3%B5es%3F"  target="_blank" 
+   class="fixed bottom-20 right-4 md:bottom-12 md:right-6 bg-green-500 text-white w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shadow-xl hover:bg-green-600 transition-all duration-300 z-30 animate-float"
+   aria-label="Conversar no WhatsApp">
+    <i data-lucide="message-circle" class="w-6 h-6 md:w-7 md:h-7"></i>
+</a>
+
+
+<!-- dependências: Alpine Collapse (para animação) e Lucide -->
+<script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+<script>
+  // garante que ícones sejam carregados após atualizações do alpine
+  document.addEventListener('alpine:initialized', () => setTimeout(() => lucide?.createIcons(), 30));
+</script>
+
+
+<!-- dependências: Alpine Collapse (para animação) e Lucide -->
+<script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+<script>
+  // garante que ícones sejam carregados após atualizações do alpine
+  document.addEventListener('alpine:initialized', () => setTimeout(() => lucide?.createIcons(), 30));
+</script>
+
+
+o
+    <script src="js/main.js" defer></script>
+    <script src="js/modules/animations.js" defer></script>
+    <script src="js/modules/form.js" defer></script>
+    <script src="js/modules/menu.js" defer></script>
+    <script src="js/modules/recommedations.js" defer></script>
+    <script src="js/modules/scroll.js" defer></script>
+    <script src="js/modules/swiper.js" defer></script>
+    <script src="js/modules/video.js" defer></script>
+    
+  </body>
+</html>

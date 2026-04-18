@@ -1,0 +1,131 @@
+/* Luxury Card */
+.luxury-card {
+  transition: all 0.4s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .luxury-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+/* Spec Card */
+.spec-card {
+  background: var(--color-white);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .spec-card {
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .spec-card {
+    padding: 2rem;
+  }
+}
+
+.spec-card-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--color-champagne);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .spec-card-icon {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .spec-card-icon {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}
+
+.spec-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .spec-card-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.spec-card-text {
+  color: var(--color-taupe);
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .spec-card-text {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.spec-card-value {
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--color-dark);
+}
+
+@media (min-width: 768px) {
+  .spec-card-value {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .spec-card-value {
+    font-size: 1.25rem;
+  }
+}
+
+/* Glass effect card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+@media (min-width: 768px) {
+  .glass-card {
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .glass-card {
+    padding: 2rem;
+  }
+}
+
+@supports ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
+  .glass-card {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+}

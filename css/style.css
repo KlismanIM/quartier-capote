@@ -1,0 +1,70 @@
+/* Main CSS Import File */
+
+/* Base */
+@import 'base/reset.css';
+@import 'base/variables.css';
+@import 'base/typography.css';
+
+/* Layout */
+@import 'layout/header.css';
+@import 'layout/footer.css';
+@import 'layout/sections.css';
+
+/* Components */
+@import 'components/buttons.css';
+@import 'components/cards.css';
+@import 'components/navbar.css';
+@import 'components/forms.css';
+@import 'components/carousel.css';
+
+/* Custom global styles */
+body {
+  overflow-x: hidden;
+  background: url('../img/quartier-5.jpeg') no-repeat center fixed;
+  background-size: cover;
+  background-color: #F9F7F4;
+}
+
+/* Parallax effect - disabled on mobile */
+@media (min-width: 768px) {
+  .parallax-bg {
+    background-attachment: fixed;
+  }
+}
+
+.parallax-bg {
+  background-attachment: scroll;
+}
+
+/* Touch device optimizations */
+.touch-device .luxury-card.touch-active {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Custom scrollbar - desktop only */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--color-champagne);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-taupe);
+    border-radius: 5px;
+  }
+}
+
+/* Performance optimizations */
+img,
+video {
+  content-visibility: auto;
+}
+
+/* Alpine.js cloak */
+[x-cloak] {
+  display: none !important;
+}

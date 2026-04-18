@@ -1,0 +1,52 @@
+/* Desktop Menu */
+.desktop-menu {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktop-menu {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .desktop-menu {
+    gap: 2.5rem;
+  }
+}
+
+.nav-link {
+  transition: color var(--transition-fast);
+  font-size: 0.875rem;
+}
+
+@media (min-width: 1024px) {
+  .nav-link {
+    font-size: 1rem;
+  }
+}
+
+.nav-link-active {
+  color: var(--color-clay);
+  font-weight: 600;
+}
+
+.nav-link-inactive {
+  color: var(--color-noir);
+}
+
+.nav-link-inactive:hover {
+  color: var(--color-clay);
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .nav-link {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
