@@ -53,54 +53,38 @@ Swiper.js	11.x	Carrossel touch com efeito fade	✅	-
 Lucide Icons	latest	Ícones vetoriais modernos	✅	-
 Formspree	-	Backend para captura de leads	✅	-
 Google Fonts	-	Cormorant, Montserrat, Playfair Display	✅	-
-🧠 Funcionalidades
-✨ Design responsivo — Mobile-first com breakpoints de 375px a 1536px (IA + Refino)
-✨ Menu dinâmico — Controle de estado e seção ativa com Alpine.js (IA + Refino)
-✨ Scroll tracking — Detecção automática da seção visível (IA)
-✨ Hero animada — Efeito float e slide-up na entrada (IA)
-✨ Galeria interativa — Carrossel Swiper com 16 imagens e autoplay (IA)
-✨ Vídeo institucional — Player customizado com proteção contra download (Refino manual)
-✨ Formulário funcional — Integração com Formspree e mensagem de sucesso (IA)
-✨ WhatsApp flutuante — Acesso rápido com animação de flutuação (IA)
-✨ Recomendações inteligentes — Componente com cooldown de 50 segundos (Refino manual)
-✨ Smooth scroll — Navegação suave entre seções (IA)
-✨ Lazy loading — Carregamento otimizado de imagens (Refino manual)
-✨ Touch optimizations — Experiência aprimorada em dispositivos móveis (Refino manual)
+## 🧠 Funcionalidades
 
-⚙️ Arquitetura do Projeto
-text
+- ✨ **Design responsivo** — Mobile-first com breakpoints de 375px a 1536px *(IA + Refino)*  
+- ✨ **Menu dinâmico** — Controle de estado e seção ativa com Alpine.js *(IA + Refino)*  
+- ✨ **Scroll tracking** — Detecção automática da seção visível *(IA)*  
+- ✨ **Hero animada** — Efeito float e slide-up na entrada *(IA)*  
+- ✨ **Galeria interativa** — Carrossel Swiper com autoplay *(IA)*  
+- ✨ **Vídeo institucional** — Player customizado *(Refino manual)*  
+- ✨ **Formulário funcional** — Integração com Formspree *(IA)*  
+- ✨ **WhatsApp flutuante** — CTA direto *(IA)*  
+- ✨ **Recomendações inteligentes** — Cooldown de 50s *(Refino manual)*  
+- ✨ **Smooth scroll** — Navegação fluida *(IA)*  
+- ✨ **Lazy loading** — Otimização de imagens *(Refino manual)*  
+- ✨ **Touch optimizations** — Mobile UX refinado *(Refino manual)*  
+
+## ⚙️ Arquitetura do Projeto
+
+```bash
 quartier-capote/
-├── index.html                 # Página principal
+├── index.html
 ├── css/
-│   ├── style.css             # Importador central
+│   ├── style.css
 │   ├── base/
-│   │   ├── reset.css         # Reset CSS moderno
-│   │   ├── variables.css     # Cores, sombras, breakpoints
-│   │   └── typography.css    # Fontes e estilos tipográficos
 │   ├── layout/
-│   │   ├── header.css        # Cabeçalho e navegação
-│   │   ├── footer.css        # Rodapé
-│   │   └── sections.css      # Seções principais
 │   └── components/
-│       ├── buttons.css       # Botões e CTAs
-│       ├── cards.css         # Cards de especificações
-│       ├── navbar.css        # Menu desktop/mobile
-│       ├── forms.css         # Formulário de contato
-│       └── carousel.css      # Estilos do Swiper
 ├── js/
-│   ├── main.js               # Entry point (ES6 modules)
+│   ├── main.js
 │   └── modules/
-│       ├── menu.js           # Mobile menu e seção ativa
-│       ├── scroll.js         # Smooth scroll
-│       ├── swiper.js         # Inicialização do carrossel
-│       ├── form.js           # Submissão Formspree
-│       ├── video.js          # Player customizado
-│       ├── animations.js     # Lazy loading e touch
-│       └── recommendations.js # Componente com cooldown
-├── img/                      # Imagens otimizadas
-├── video/                    # Vídeo institucional
-├── .gitignore               # Proteção de assets
-└── README.md                # Documentação
+├── img/
+├── video/
+└── README.md
+
 🎨 Diferenciais do Empreendimento
 Categoria	Destaque
 Arquitetura	Königsberger Vannucchi (escritório renomado)
