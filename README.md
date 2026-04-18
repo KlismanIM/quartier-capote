@@ -149,10 +149,36 @@ Estrutura semântica acessível
 Padronização visual
 Otimização de performance
 
-🌐 Acesso
-<p align="center"> <a href="https://quartier-capote-valente.netlify.app/" target="_blank"> <img src="https://img.shields.io/badge/🔗 Ver Projeto Online-blue?style=for-the-badge"/> </a> <a href="https://github.com/KlismanIM/quartier-capote" target="_blank"> <img src="https://img.shields.io/badge/📁 Repositório-GitHub-black?style=for-the-badge&logo=github"/> </a> </p>
-👩‍💼 Contato
-<p align="center"> <strong>Vanessa Fernandes</strong><br> Especialista em Negócios Imobiliários </p> <p align="center"> <a href="https://wa.me/5511972807662"> <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/> </a> <a href="https://www.instagram.com/vanessaimoveisfn/"> <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white"/> </a> </p>
+## 🌐 Acesso
+
+<p align="center">
+  <a href="https://quartier-capote-valente.netlify.app/" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/🔗%20Ver%20Projeto%20Online-blue?style=for-the-badge" />
+  </a>
+  
+  <a href="https://github.com/KlismanIM/quartier-capote" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/📁%20Repositório-GitHub-black?style=for-the-badge&logo=github" />
+  </a>
+</p>
+
+---
+
+## 👩‍💼 Contato
+
+<p align="center">
+  <strong>Vanessa Fernandes</strong><br>
+  Especialista em Negócios Imobiliários
+</p>
+
+<p align="center">
+  <a href="https://wa.me/5511972807662" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
+  </a>
+  
+  <a href="https://www.instagram.com/vanessaimoveisfn/" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" />
+  </a>
+</p>
 
 
 📊 Status
