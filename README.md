@@ -108,46 +108,7 @@ quartier-capote/
 ├── video/
 └── README.md
 ```
-🎨 Diferenciais do Empreendimento
-Categoria	Destaque
-Arquitetura	Königsberger Vannucchi
-Paisagismo	Núcleo Arquitetura da Paisagem
-Interiores	Estúdio Dutra
-Tipologias	Studios a 3 Dorms
-Metragem	25m² a 90m²
-Vagas	0 a 2 vagas
-🏊 Áreas Comuns
 
-Térreo:
-
-Piscinas (adulto, infantil e coberta)
-Pet place e playground
-Churrasqueira e salão de festas
-Miniquadra e brinquedoteca
-Sauna e áreas verdes
-
-9º Pavimento:
-
-Academia
-Sala de massagem
-Coworking
-Sala de jogos
-Lavanderia
-
-Serviços:
-
-Bicicletário
-Delivery
-Spa
-Churrasqueira gourmet
-🛠️ Atuação no Projeto
-Arquitetura modular do frontend
-Responsividade avançada
-Integração de bibliotecas
-Desenvolvimento de interações
-Estrutura semântica acessível
-Padronização visual
-Otimização de performance
 
 ## 🌐 Acesso
 
